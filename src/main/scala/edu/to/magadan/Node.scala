@@ -1,6 +1,14 @@
 package edu.to.magadan
 
-case class Term(term: Int) extends AnyVal
+import io.estatico.newtype.macros.newtype
 
-// NOTE: maybe its better to move term and state into some CurrentNodeContext
-case class Node(state: NodeState, nodes: List[Node], id: Int, term: Term)
+case class Node(state: NodeState, id: Node.Id, term: Node.Term, timeoutConfig: TimeoutConfig)
+
+object Node {
+
+  @newtype
+  case class Term(value: Int)
+
+  @newtype
+  case class Id(value: Int)
+}
